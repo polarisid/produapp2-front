@@ -10,7 +10,9 @@ import useAuth from "../../hooks/useAuth";
 const HomePage = () => {
 	const navigate = useNavigate();
 	const { token } = useAuth();
-	const [workspaces, setWorkspaces] = useState([]);
+	const [workspaces, setWorkspaces] = useState(false);
+	const [pendings, setPendings] = useState(false);
+	const [opens, setOpens] = useState(false);
 	useEffect(() => {
 		if (!token) {
 			navigate("/");
@@ -18,14 +20,30 @@ const HomePage = () => {
 		try {
 			async function getData() {
 				const items = await api.getWorkpace(token);
-				console.log(items);
-				return items;
+				console.log(items.data);
+				setWorkspaces(items.data);
+				setOpens(
+					items.data.filter(
+						(item) =>
+							item.status === "Avaliation" ||
+							item.status === "InRepair" ||
+							item.status === "OQCFail"
+					)
+				);
+				setPendings(
+					items.data.filter(
+						(item) =>
+							item.status !== "Avaliation" &&
+							item.status !== "InRepair" &&
+							item.status !== "OQCFail"
+					)
+				);
 			}
-			setWorkspaces(getData());
+			getData();
 		} catch {
 			console.log("erro");
 		}
-	}, []);
+	}, [workspaces]);
 
 	return (
 		<Container>
@@ -34,44 +52,54 @@ const HomePage = () => {
 				<form>
 					<Input placeholder="Os" />
 					<Input placeholder="Modelo" />
-					<Button>Cadastrar Nova Avalição</Button>
 				</form>
+				<Button>Cadastrar Nova Avalição</Button>
 			</section>
 
 			<div class="divider"></div>
 			<section class="avaliations">
-				<CardBox
-					os={4162587447}
-					model={"SM-P615"}
-					status={"AVALIATION"}
-					Entrada={"12/10/2021 12h40"}
-					elapsedTime={"2 minutos"}
-				/>
-				<CardBox
-					os={4162587447}
-					model={"SM-A525"}
-					status={"AVALIATION"}
-					Entrada={"12/10/2021 12h40"}
-					elapsedTime={"2 minutos"}
-				/>
+				{opens ? (
+					opens.map((item) => (
+						<CardBox
+							setWorkspaces={setWorkspaces}
+							workspaces={workspaces}
+							id={item.id}
+							os={item.os}
+							model={item.model}
+							status={item.status}
+							Entrada={item.createTime}
+							elapsedTime={item.elapsedTime}
+						/>
+					))
+				) : (
+					<></>
+				)}
 			</section>
 			<p>Aparelhos pendentes</p>
 			<div class="divider"></div>
 			<section class="pendings">
-				<CardRectangle
+				{pendings ? (
+					pendings.map((item) => (
+						<CardRectangle
+							setWorkspaces={setWorkspaces}
+							workspaces={workspaces}
+							id={item.id}
+							os={item.os}
+							model={item.model}
+							status={item.status}
+							Entrada={item.createTime}
+							// elapsedTime={item.elapsedTime}
+						/>
+					))
+				) : (
+					<></>
+				)}
+				{/* <CardRectangle
 					os={4162587447}
 					model={"SM-P615"}
 					status={"AVALIATION"}
 					Entrada={"12/10/2021 12h40"}
-					elapsedTime={"2 minutos"}
-				/>
-				<CardRectangle
-					os={4162587447}
-					model={"SM-A525"}
-					status={"AVALIATION"}
-					Entrada={"12/10/2021 12h40"}
-					elapsedTime={"2 minutos"}
-				/>
+				/> */}
 			</section>
 		</Container>
 	);

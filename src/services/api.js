@@ -23,6 +23,15 @@ async function getWorkpace(token) {
 	return baseAPI.get("/items/workspace", getConfig(token));
 }
 
+async function changeStatus(token, id, status) {
+	console.log(token, id, status);
+	return baseAPI.patch(
+		`/items/workspace/status/${id}`,
+		status,
+		getConfig(token)
+	);
+}
+
 async function createTask(taskData, token) {
 	return baseAPI.post("/tasks/create/task", taskData, getConfig(token));
 }
@@ -32,6 +41,7 @@ async function createColumn(columnData, token) {
 }
 
 const api = {
+	changeStatus,
 	signUp,
 	signIn,
 	getWorkpace,

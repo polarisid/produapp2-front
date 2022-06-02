@@ -1,17 +1,46 @@
 import styled from "styled-components";
 import { useState } from "react";
+import api from "../../services/api";
+import useAuth from "../../hooks/useAuth";
 
 export default function CardRectangle(props) {
-	const [state, setState] = useState(0);
-	// setInterval(function () {
-	// 	setState(state + 1);
-	// }, 1000);
+	const [state, setState] = useState({ id: props.id, status: props.status });
+	const { token } = useAuth();
+	const { workspaces, setWorkspaces } = props;
+	async function handleChangeStatus(e) {
+		try {
+			await api.changeStatus(token, e.target.id, {
+				status: e.target.value.toString(),
+			});
+			// setState({ id: e.target.id, status: e.target.value });
+			setWorkspaces(!workspaces);
+		} catch (err) {
+			console.log(err.toJSON());
+		}
+	}
 	return (
 		<StyledDiv>
 			<h2>OS:{props.os}</h2>
 			<h2>Modelo:{props.model}</h2>
 			<h2>Status: {props.status}</h2>
 			<h2>Entrada: {props.entrada}</h2>
+			<select
+				name="hall"
+				id={props.id}
+				value={props.status}
+				onChange={handleChangeStatus}
+			>
+				<option value="Avaliation">Avaliação</option>
+				<option value="Finished">Finalizado</option>
+				<option disabled value="OQCFail">
+					OQC FAIL
+				</option>
+				<option value="InRepair">Em Reparo</option>
+				<option value="PendingOthers">Pendencia Outros</option>
+				<option value="PendingParts">Pendencia Peças</option>
+				<option value="PendingCost">Pendencia Orçamento</option>
+				<option value="PendingSaw">Pendencia Saw</option>
+			</select>
 			<h2>Tempo: {props.elapsedTime}</h2>
 		</StyledDiv>
 	);
