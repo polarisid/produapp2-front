@@ -20,7 +20,7 @@ async function signIn(signInData) {
 }
 
 async function getWorkpace(token) {
-	return baseAPI.get("/tasks/workspace", getConfig(token));
+	return baseAPI.get("/items/workspace", getConfig(token));
 }
 
 async function createTask(taskData, token) {

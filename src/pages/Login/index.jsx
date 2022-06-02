@@ -24,7 +24,7 @@ const LoginPage = () => {
 			console.log(res);
 			signIn(res.data.token);
 			alert("Sucesso ;) ");
-			navigate("/");
+			navigate("/home");
 		} catch (err) {
 			console.log(err);
 		}
