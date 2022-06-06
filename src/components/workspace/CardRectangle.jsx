@@ -27,6 +27,10 @@ export default function CardRectangle(props) {
 				<b>Modelo:</b>
 				{props.model}
 			</h1>
+			<h1>
+				<b>Last User:</b>
+				{props.userChanged.name}
+			</h1>
 
 			<div className="select-dropdown">
 				<select

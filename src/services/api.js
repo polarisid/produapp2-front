@@ -36,12 +36,8 @@ async function createItem(itemData, token) {
 	return baseAPI.post("/items/workspace", itemData, getConfig(token));
 }
 
-async function createTask(taskData, token) {
-	return baseAPI.post("/tasks/create/task", taskData, getConfig(token));
-}
-
-async function createColumn(columnData, token) {
-	return baseAPI.post("/tasks/create/column", columnData, getConfig(token));
+async function searchItemByOs(token, os) {
+	return baseAPI.get(`/items/search/${os}`, getConfig(token));
 }
 
 const api = {
@@ -50,8 +46,7 @@ const api = {
 	signUp,
 	signIn,
 	getWorkpace,
-	createTask,
-	createColumn,
+	searchItemByOs,
 };
 
 export default api;

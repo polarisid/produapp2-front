@@ -8,6 +8,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 const HomePage = () => {
 	const [newItem, setNewItem] = useState({ os: "", model: "" });
+	const [search, setSearch] = useState({ os: "" });
 	const navigate = useNavigate();
 	const { token } = useAuth();
 	const [workspaces, setWorkspaces] = useState(false);
@@ -28,14 +29,14 @@ const HomePage = () => {
 							item.status === "OQCFail"
 					)
 				);
-				setPendings(
-					items.data.filter(
-						(item) =>
-							item.status !== "Avaliation" &&
-							item.status !== "InRepair" &&
-							item.status !== "OQCFail"
-					)
-				);
+				// setPendings(
+				// 	items.data.filter(
+				// 		(item) =>
+				// 			item.status !== "Avaliation" &&
+				// 			item.status !== "InRepair" &&
+				// 			item.status !== "OQCFail"
+				// 	)
+				// );
 			}
 
 			getData();
@@ -44,6 +45,17 @@ const HomePage = () => {
 		}
 	}, [workspaces]);
 
+	async function handleSearchOs(e) {
+		e.preventDefault();
+		try {
+			const itemsPending = await api.searchItemByOs(token, search.os);
+			setPendings(itemsPending.data);
+			console.log(itemsPending.data);
+			setSearch({ os: "" });
+		} catch {
+			console.log("erro");
+		}
+	}
 	async function handleSubmit(e) {
 		e.preventDefault();
 		console.log(newItem);
@@ -60,7 +72,7 @@ const HomePage = () => {
 	return (
 		<>
 			<TopBar />
-			{!pendings && !opens ? (
+			{!opens ? (
 				<Container>
 					<div className="loading">Carregando...</div>
 				</Container>
@@ -114,12 +126,30 @@ const HomePage = () => {
 								<></>
 							)}
 						</section>
-						<p>Pendentes</p>
+						<section className="formSection">
+							<p>Pendentes</p>
+							<form onSubmit={handleSearchOs}>
+								<input
+									placeholder="Os"
+									type="number"
+									required
+									value={search.os}
+									name="os"
+									onChange={(e) =>
+										setSearch({ ...search, [e.target.name]: e.target.value })
+									}
+								/>
+
+								<button type="submit">Pesquisar</button>
+							</form>
+						</section>
+
 						<div className="divider"></div>
 						<section className="pendings">
 							{pendings ? (
 								pendings.map((item, key) => (
 									<CardRectangle
+										userChanged={item.userChanged}
 										key={key}
 										setWorkspaces={setWorkspaces}
 										workspaces={workspaces}
