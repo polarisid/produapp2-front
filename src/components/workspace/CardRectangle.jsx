@@ -39,14 +39,14 @@ export default function CardRectangle(props) {
 					value={props.status}
 					onChange={handleChangeStatus}
 				>
-					<option value="InRepair">Em Reparo</option>
+					<option value="Pending">Pendencia</option>
+					<option value="TechnicalAdvice">Parecer técnico</option>
+					<option value="ConfirmedCost">Confirmado-Orçamento</option>
+					<option value="ConfirmedParts">Confirmado-Peças</option>
+					<option value="ConfirmedSaw">Confirmado-SAW</option>
 					<option value="Finished">Finalizado</option>
-					<option value="PendingOthers">Pendencia Outros</option>
-					<option value="PendingParts">Pendencia Peças</option>
-					<option value="PendingCost">Pendencia Orçamento</option>
-					<option value="PendingSaw">Pendencia Saw</option>
 					<option disabled value="Avaliation">
-						Avaliação
+						Avaliação/Reparo
 					</option>
 					<option disabled value="OQCFail">
 						OQC FAIL

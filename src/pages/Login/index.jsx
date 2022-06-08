@@ -34,6 +34,8 @@ const LoginPage = () => {
 			alert("Sucesso ;) ");
 			var user = jwt_decode(res.data.token);
 			if (user.role === "USER") navigate("/home");
+			if (user.role === "ADMIN") navigate("/admin/home");
+			if (user.role === "OQC") navigate("/oqc/home");
 		} catch (err) {
 			setIsLoading(false);
 			alert(err.response.data);

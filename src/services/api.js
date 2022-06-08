@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const baseAPI = axios.create({
+	// baseURL: "http://localhost:5000",
 	baseURL: "https://hidden-mesa-58705.herokuapp.com",
 });
 
@@ -32,12 +33,18 @@ async function changeStatus(token, id, status) {
 	);
 }
 
+async function getAdminDashboard(asc, token) {
+	return baseAPI.get(`/admin/items/workspace/${asc}`, getConfig(token));
+}
 async function createItem(itemData, token) {
 	return baseAPI.post("/items/workspace", itemData, getConfig(token));
 }
 
 async function searchItemByOs(token, os) {
 	return baseAPI.get(`/items/search/${os}`, getConfig(token));
+}
+async function getAllFinished(token) {
+	return baseAPI.get(`/items/finished`, getConfig(token));
 }
 
 const api = {
@@ -47,6 +54,8 @@ const api = {
 	signIn,
 	getWorkpace,
 	searchItemByOs,
+	getAdminDashboard,
+	getAllFinished,
 };
 
 export default api;

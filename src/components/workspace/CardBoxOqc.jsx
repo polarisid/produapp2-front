@@ -2,7 +2,7 @@ import styled from "styled-components";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import dayjs from "dayjs";
-export default function CardBox(props) {
+export default function CardBoxOqc(props) {
 	const { token } = useAuth();
 	const { workspaces, setWorkspaces } = props;
 
@@ -41,17 +41,10 @@ export default function CardBox(props) {
 					value={props.status}
 					onChange={handleChangeStatus}
 				>
-					<option value="Pending">Pendencia</option>
-					<option value="TechnicalAdvice">Parecer técnico</option>
-					<option value="ConfirmedCost">Confirmado-Orçamento</option>
-					<option value="ConfirmedParts">Confirmado-Peças</option>
-					<option value="ConfirmedSaw">Confirmado-SAW</option>
-					<option value="Finished">Finalizado</option>
-					<option disabled value="Avaliation">
-						Avaliação/Reparo
-					</option>
-					<option disabled value="OQCFail">
-						OQC FAIL
+					<option value="OQCPass">OQC Pass</option>
+					<option value="OQCFail">OQC FAIL</option>
+					<option disabled value="Finished">
+						Finalizado
 					</option>
 				</select>
 			</div>

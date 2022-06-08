@@ -1,14 +1,14 @@
 import api from "../../services/api";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import CardBox from "../../components/workspace/CardBox";
+import CardBoxOqc from "../../components/workspace/CardBoxOqc";
 import CardRectangle from "../../components/workspace/CardRectangle";
 import TopBar from "../../components/TopBar";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import jwt_decode from "jwt-decode";
 
-const HomePage = () => {
+const OqcPage = () => {
 	const [newItem, setNewItem] = useState({ os: "", model: "" });
 	const [search, setSearch] = useState({ os: "" });
 	const navigate = useNavigate();
@@ -22,30 +22,11 @@ const HomePage = () => {
 		}
 		var user = jwt_decode(token);
 		if (user.role === "ADMIN") navigate("/admin/home");
-		if (user.role === "OQC") navigate("/oqc/home");
+		if (user.role === "USER") navigate("/home");
 		try {
 			async function getData() {
-				const items = await api.getWorkpace(token);
-				setOpens(
-					items.data.filter(
-						(item) =>
-							item.status === "Avaliation" ||
-							item.status === "InRepair" ||
-							item.status === "OQCFail" ||
-							item.status === "ConfirmedSaw" ||
-							item.status === "ConfirmedCost" ||
-							item.status === "ConfirmedParts" ||
-							item.status === "TechnicalAdvice"
-					)
-				);
-				// setPendings(
-				// 	items.data.filter(
-				// 		(item) =>
-				// 			item.status !== "Avaliation" &&
-				// 			item.status !== "InRepair" &&
-				// 			item.status !== "OQCFail"
-				// 	)
-				// );
+				const items = await api.getAllFinished(token);
+				setOpens(items.data.filter((item) => item.status === "Finished"));
 			}
 
 			getData();
@@ -89,36 +70,14 @@ const HomePage = () => {
 				<>
 					<Container>
 						<section className="formSection">
-							<p>Avaliações e reparos</p>
-							<form onSubmit={handleSubmit}>
-								<input
-									placeholder="Os"
-									type="number"
-									required
-									value={newItem.os}
-									name="os"
-									onChange={(e) =>
-										setNewItem({ ...newItem, [e.target.name]: e.target.value })
-									}
-								/>
-								<input
-									placeholder="Modelo"
-									value={newItem.model}
-									name="model"
-									required
-									onChange={(e) =>
-										setNewItem({ ...newItem, [e.target.name]: e.target.value })
-									}
-								/>
-								<button type="submit">Adicionar</button>
-							</form>
+							<p>Finalizados</p>
 						</section>
 
 						<div className="divider"></div>
 						<section className="avaliations">
 							{opens ? (
 								opens.map((item, key) => (
-									<CardBox
+									<CardBoxOqc
 										key={key}
 										setWorkspaces={setWorkspaces}
 										workspaces={workspaces}
@@ -135,7 +94,7 @@ const HomePage = () => {
 								<></>
 							)}
 						</section>
-						<section className="formSection">
+						{/* <section className="formSection">
 							<p>Pendentes</p>
 							<form onSubmit={handleSearchOs}>
 								<input
@@ -151,10 +110,10 @@ const HomePage = () => {
 
 								<button type="submit">Pesquisar</button>
 							</form>
-						</section>
+						</section> */}
 
 						<div className="divider"></div>
-						<section className="pendings">
+						{/* <section className="pendings">
 							{pendings ? (
 								pendings.map((item, key) => (
 									<CardRectangle
@@ -173,7 +132,7 @@ const HomePage = () => {
 							) : (
 								<></>
 							)}
-						</section>
+						</section> */}
 					</Container>
 				</>
 			)}
@@ -235,4 +194,4 @@ const Container = styled.div`
 		justify-content: space-between;
 	}
 `;
-export default HomePage;
+export default OqcPage;
