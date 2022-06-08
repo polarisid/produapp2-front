@@ -8,7 +8,7 @@ export default function CardBox(props) {
 
 	setInterval(() => {
 		setWorkspaces(!workspaces);
-	}, 60000);
+	}, 2000);
 
 	async function handleChangeStatus(e) {
 		try {

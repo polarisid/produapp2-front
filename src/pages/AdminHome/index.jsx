@@ -8,11 +8,15 @@ import TopBarAdmin from "../../components/TopBarAdmin";
 import MiniCard from "../../components/adminWorkspace/miniCard";
 const AdminHome = () => {
 	const { token } = useAuth();
+	const [workspaces, setWorkspaces] = useState(true);
 	const [asc, setAsc] = useState("");
 	const [avaliations, setAvaliations] = useState([]);
 	const [trocas, setTrocas] = useState([]);
 	const [saw, setSaw] = useState([]);
 	const [parecer, setParecer] = useState([]);
+	setInterval(() => {
+		setWorkspaces(!workspaces);
+	}, 2000);
 
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -21,7 +25,7 @@ const AdminHome = () => {
 		}
 		var user = jwt_decode(token);
 		if (user.role === "USER") navigate("/home");
-	}, []);
+	}, [workspaces]);
 
 	async function handleChange(e) {
 		e.preventDefault();
@@ -68,7 +72,11 @@ const AdminHome = () => {
 				<div className="divider"></div>
 				<section className="actually">
 					<div className="miniCard">
-						<h1>Avaliações Atuais</h1>
+						<div className="title">
+							<h1>Avaliações/Reparos do Dia</h1>
+							{avaliations.length > 0 && <h2>{avaliations.length}</h2>}
+						</div>
+
 						{avaliations.length > 0 ? (
 							avaliations.map((item) => (
 								<MiniCard
@@ -76,15 +84,23 @@ const AdminHome = () => {
 									os={item.os}
 									model={item.model}
 									tecName={item.userChanged.name}
+									createTime={item.createTime}
+									elapsedTime={item.elapsedTime}
+									updateTime={item.updateTime}
 								/>
 							))
 						) : (
-							<h1>Nothing</h1>
+							<div className="zerado">
+								<h1>Zerado</h1>
+							</div>
 						)}
 						{/* <MiniCard os="4163823678" model="Sm-A505GXZSWERSC" /> */}
 					</div>
 					<div className="miniCard">
-						<h1>Trocas de Peças e Orçamento</h1>
+						<div className="title">
+							<h1>Trocas de peças (Orçamento e pendencia)</h1>
+							{trocas.length > 0 && <h2>{trocas.length}</h2>}
+						</div>
 						{trocas.length > 0 ? (
 							trocas.map((item) => (
 								<MiniCard
@@ -95,11 +111,16 @@ const AdminHome = () => {
 								/>
 							))
 						) : (
-							<h1>Nothing</h1>
+							<div className="zerado">
+								<h1>Zerado</h1>
+							</div>
 						)}
 					</div>
 					<div className="miniCard">
-						<h1>SAW Aprovado</h1>
+						<div className="title">
+							<h1>SAW Respondido</h1>
+							{saw.length > 0 && <h2>{saw.length}</h2>}
+						</div>
 						{saw.length > 0 ? (
 							saw.map((item) => (
 								<MiniCard
@@ -110,11 +131,16 @@ const AdminHome = () => {
 								/>
 							))
 						) : (
-							<h1>Nothing</h1>
+							<div className="zerado">
+								<h1>Zerado</h1>
+							</div>
 						)}
 					</div>
 					<div className="miniCard">
-						<h1>Parecer Técnico</h1>
+						<div className="title">
+							<h1>Parecer Técnico</h1>
+							{parecer.length > 0 && <h2>{parecer.length}</h2>}
+						</div>
 						{parecer.length > 0 ? (
 							parecer.map((item) => (
 								<MiniCard
@@ -125,7 +151,9 @@ const AdminHome = () => {
 								/>
 							))
 						) : (
-							<h1>Nothing</h1>
+							<div className="zerado">
+								<h1>Zerado</h1>
+							</div>
 						)}
 					</div>
 				</section>
@@ -147,15 +175,45 @@ const Container = styled.div`
 		background-color: #585858;
 		margin: 10px 0;
 	}
+	div.title {
+		border-radius: 10px;
+		background: rgb(0, 0, 0);
+		background: linear-gradient(
+			0deg,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(116, 116, 116, 1) 100%
+		);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 50px;
+		border: 1px solid rgba(116, 116, 116, 1);
+	}
+	div.zerado {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 50px;
+	}
 	div.miniCard {
 		border-radius: 10px;
 		border: 2px solid rgba(255, 255, 255, 0.5);
 		width: 40%;
+		/* background-color: #c4c4c4; */
+		/* From https://css.glass */
+		background: rgba(255, 255, 0, 0);
+		border-radius: 16px;
+		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(4.4px);
+		-webkit-backdrop-filter: blur(4.4px);
+		border: 1px solid rgba(255, 255, 255, 1);
 	}
-	div.miniCard-content {
+
+	/* div.miniCard-content {
 		background-color: rgba(31, 31, 31, 0.5);
 		margin-top: 8px;
-	}
+	} */
 
 	div.flex {
 		gap: 4px;
