@@ -70,9 +70,9 @@ const LoginPage = () => {
 				</Button>
 			</form>
 
-			<RouterLink disabled to="/signup">
+			{/* <RouterLink disabled to="/signup">
 				Criar conta
-			</RouterLink>
+			</RouterLink> */}
 		</Container>
 	);
 };
