@@ -8,7 +8,7 @@ export default function CardBoxOqc(props) {
 
 	setInterval(() => {
 		setWorkspaces(!workspaces);
-	}, 2000);
+	}, 60000);
 
 	async function handleChangeStatus(e) {
 		try {

@@ -63,6 +63,7 @@ const AdminReports = () => {
 								<th>Modelo</th>
 								<th>Técnico</th>
 								<th>Status</th>
+								<th>StatusFinal</th>
 								<th>Horário</th>
 							</tr>
 						</thead>
@@ -73,6 +74,7 @@ const AdminReports = () => {
 									<td>{item.item.model}</td>
 									<td>{item.user.name}</td>
 									<td>{item.status}</td>
+									<td>{item.item.status}</td>
 									<td>{dayjs(item.createdAt).format("HH:mm:ss")}</td>
 								</tr>
 							))}
