@@ -108,6 +108,8 @@ const AdminHome = () => {
 									os={item.os}
 									model={item.model}
 									tecName={item.userChanged.name}
+									elapsedTime={item.elapsedTime}
+									updateTime={item.updateTime}
 								/>
 							))
 						) : (
@@ -128,6 +130,8 @@ const AdminHome = () => {
 									os={item.os}
 									model={item.model}
 									tecName={item.userChanged.name}
+									elapsedTime={item.elapsedTime}
+									updateTime={item.updateTime}
 								/>
 							))
 						) : (
@@ -148,6 +152,8 @@ const AdminHome = () => {
 									os={item.os}
 									model={item.model}
 									tecName={item.userChanged.name}
+									elapsedTime={item.elapsedTime}
+									updateTime={item.updateTime}
 								/>
 							))
 						) : (

@@ -47,7 +47,11 @@ async function getAllFinished(token) {
 	return baseAPI.get(`/items/finished`, getConfig(token));
 }
 
+async function getHistoric(asc, token) {
+	return baseAPI.get(`/admin/items/report/${asc}`, getConfig(token));
+}
 const api = {
+	getHistoric,
 	createItem,
 	changeStatus,
 	signUp,

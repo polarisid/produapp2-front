@@ -2,20 +2,25 @@ import styled from "styled-components";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+
 export default function CardBox(props) {
 	const { token } = useAuth();
 	const { workspaces, setWorkspaces } = props;
+	const [isLoading, setIsLoading] = useState(false);
 
 	setInterval(() => {
 		setWorkspaces(!workspaces);
 	}, 2000);
 
 	async function handleChangeStatus(e) {
+		setIsLoading(true);
 		try {
 			await api.changeStatus(token, e.target.id, {
 				status: e.target.value.toString(),
 			});
 			setWorkspaces(!workspaces);
+			setIsLoading(false);
 		} catch (err) {
 			console.log(err.toJSON());
 		}
@@ -35,25 +40,29 @@ export default function CardBox(props) {
 				<b>Status:</b>
 			</h1>
 			<div className="select-dropdown">
-				<select
-					name="hall"
-					id={props.id}
-					value={props.status}
-					onChange={handleChangeStatus}
-				>
-					<option value="Pending">Pendencia</option>
-					<option value="TechnicalAdvice">Parecer técnico</option>
-					<option value="ConfirmedCost">Confirmado-Orçamento</option>
-					<option value="ConfirmedParts">Confirmado-Peças</option>
-					<option value="ConfirmedSaw">Confirmado-SAW</option>
-					<option value="Finished">Finalizado</option>
-					<option disabled value="Avaliation">
-						Avaliação/Reparo
-					</option>
-					<option disabled value="OQCFail">
-						OQC FAIL
-					</option>
-				</select>
+				{isLoading ? (
+					<h1>Carregando</h1>
+				) : (
+					<select
+						name="hall"
+						id={props.id}
+						value={props.status}
+						onChange={handleChangeStatus}
+					>
+						<option value="Pending">Pendencia</option>
+						<option value="TechnicalAdvice">Parecer técnico</option>
+						<option value="ConfirmedCost">Confirmado-Orçamento</option>
+						<option value="ConfirmedParts">Confirmado-Peças</option>
+						<option value="ConfirmedSaw">Confirmado-SAW</option>
+						<option value="Finished">Finalizado</option>
+						<option disabled value="Avaliation">
+							Avaliação/Reparo
+						</option>
+						<option disabled value="OQCFail">
+							OQC FAIL
+						</option>
+					</select>
+				)}
 			</div>
 			<h1>
 				<b>Entrada</b> {dayjs(props.createTime).format("HH:mm")} -{" "}

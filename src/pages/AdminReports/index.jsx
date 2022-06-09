@@ -5,9 +5,34 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import jwt_decode from "jwt-decode";
 import TopBarAdmin from "../../components/TopBarAdmin";
-
+import dayjs from "dayjs";
 const AdminReports = () => {
 	const { token } = useAuth();
+	const [asc, setAsc] = useState("");
+	const [historic, setHistoric] = useState([]);
+
+	async function handleChange(e) {
+		e.preventDefault();
+		try {
+			setAsc(e.target.value);
+			const result = await api.getHistoric(e.target.value, token);
+
+			console.log(result.data);
+			setHistoric(
+				result.data.filter(
+					(item) =>
+						item.status === "Avaliation" ||
+						item.status === "ConfirmedSaw" ||
+						item.status === "ConfirmedParts" ||
+						item.status === "ConfirmedCost" ||
+						item.status === "TechnicalAdvice" ||
+						item.status === "OQCFail"
+				)
+			);
+		} catch (err) {
+			console.log(err.toJSON());
+		}
+	}
 
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -22,6 +47,14 @@ const AdminReports = () => {
 		<>
 			<TopBarAdmin />
 			<Container>
+				<div>
+					<h1>Dashboard</h1>
+					<select value={asc} onChange={handleChange}>
+						<option value="">Selecione uma Asc</option>
+						<option value="AJU3198122">AJU3198122</option>
+						<option value="SLZ5286953">SLZ5286953</option>
+					</select>
+				</div>
 				<div className="table-wrapper">
 					<table className="fl-table">
 						<thead>
@@ -34,34 +67,15 @@ const AdminReports = () => {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>4162794500</td>
-								<td>SM-A505GXLAJHDUEH</td>
-								<td>cHICObIRA</td>
-								<td>AVALIAÇÃO</td>
-								<td>09H46</td>
-							</tr>
-							<tr>
-								<td>4162794500</td>
-								<td>SM-A505GXLAJHDUEH</td>
-								<td>cHICObIRA</td>
-								<td>AVALIAÇÃO</td>
-								<td>09H46</td>
-							</tr>
-							<tr>
-								<td>4162794500</td>
-								<td>SM-A505GXLAJHDUEH</td>
-								<td>cHICObIRA</td>
-								<td>AVALIAÇÃO</td>
-								<td>09H46</td>
-							</tr>
-							<tr>
-								<td>4162794500</td>
-								<td>SM-A505GXLAJHDUEH</td>
-								<td>cHICObIRA</td>
-								<td>AVALIAÇÃO</td>
-								<td>09H46</td>
-							</tr>
+							{historic.map((item, key) => (
+								<tr key={key}>
+									<td>{item.item.os}</td>
+									<td>{item.item.model}</td>
+									<td>{item.user.name}</td>
+									<td>{item.status}</td>
+									<td>{dayjs(item.createdAt).format("HH:mm:ss")}</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</div>
