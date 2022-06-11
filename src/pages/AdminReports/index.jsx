@@ -10,10 +10,13 @@ const AdminReports = () => {
 	const { token } = useAuth();
 	const [asc, setAsc] = useState("");
 	const [historic, setHistoric] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	async function handleChange(e) {
 		e.preventDefault();
 		try {
+			setLoading(true);
 			setAsc(e.target.value);
 			const result = await api.getHistoric(e.target.value, token);
 
@@ -25,16 +28,31 @@ const AdminReports = () => {
 						item.status === "ConfirmedSaw" ||
 						item.status === "ConfirmedParts" ||
 						item.status === "ConfirmedCost" ||
-						item.status === "TechnicalAdvice" ||
 						item.status === "OQCFail"
 				)
 			);
+			console.log(
+				historic.sort((a, b) => {
+					let fa = a.user.name.toLowerCase(),
+						fb = b.user.name.toLowerCase();
+
+					if (fa < fb) {
+						return -1;
+					}
+					if (fa > fb) {
+						return 1;
+					}
+					return 0;
+				})
+			);
+			setLoading(false);
 		} catch (err) {
+			console.log(err);
+			setLoading(false);
 			console.log(err.toJSON());
 		}
 	}
 
-	const navigate = useNavigate();
 	useEffect(() => {
 		if (!token) {
 			navigate("/");
@@ -46,42 +64,46 @@ const AdminReports = () => {
 	return (
 		<>
 			<TopBarAdmin />
-			<Container>
-				<div>
-					<h1>Dashboard</h1>
-					<select value={asc} onChange={handleChange}>
-						<option value="">Selecione uma Asc</option>
-						<option value="AJU3198122">AJU3198122</option>
-						<option value="SLZ5286953">SLZ5286953</option>
-					</select>
-				</div>
-				<div className="table-wrapper">
-					<table className="fl-table">
-						<thead>
-							<tr>
-								<th>OS</th>
-								<th>Modelo</th>
-								<th>Técnico</th>
-								<th>Status</th>
-								<th>StatusFinal</th>
-								<th>Horário</th>
-							</tr>
-						</thead>
-						<tbody>
-							{historic.map((item, key) => (
-								<tr key={key}>
-									<td>{item.item.os}</td>
-									<td>{item.item.model}</td>
-									<td>{item.user.name}</td>
-									<td>{item.status}</td>
-									<td>{item.item.status}</td>
-									<td>{dayjs(item.createdAt).format("HH:mm:ss")}</td>
+			{loading ? (
+				<Container>Carregando</Container>
+			) : (
+				<Container>
+					<div>
+						<h1>Dashboard</h1>
+						<select value={asc} onChange={handleChange}>
+							<option value="">Selecione uma Asc</option>
+							<option value="AJU3198122">AJU3198122</option>
+							<option value="SLZ5286953">SLZ5286953</option>
+						</select>
+					</div>
+					<div className="table-wrapper">
+						<table className="fl-table">
+							<thead>
+								<tr>
+									<th>OS</th>
+									<th>Modelo</th>
+									<th>Técnico</th>
+									<th>Status</th>
+									<th>StatusFinal</th>
+									<th>Horário</th>
 								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</Container>
+							</thead>
+							<tbody>
+								{historic.map((item, key) => (
+									<tr key={key}>
+										<td>{item.item.os}</td>
+										<td>{item.item.model}</td>
+										<td>{item.user.name}</td>
+										<td>{item.status}</td>
+										<td>{item.item.status}</td>
+										<td>{dayjs(item.createdAt).format("HH:mm:ss")}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				</Container>
+			)}
 		</>
 	);
 };
@@ -92,6 +114,7 @@ const Container = styled.div`
 	color: #000000;
 	padding-top: 90px;
 	height: 100vh;
+	overflow-x: hidden;
 
 	* {
 		box-sizing: border-box;

@@ -40,7 +40,13 @@ const StyledDiv = styled.div`
 		font-weight: bold;
 		color: #ffffff;
 		cursor: pointer;
+		transition: all 0.3s ease;
 	}
+	h1:hover {
+		text-shadow: 0 0 4px #ffffff;
+		color: #ffffff;
+	}
+
 	.rightContent {
 		display: flex;
 		justify-content: space-between;

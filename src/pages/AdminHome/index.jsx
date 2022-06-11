@@ -61,8 +61,8 @@ const AdminHome = () => {
 		<>
 			<TopBarAdmin />
 			<Container>
-				<div>
-					<h1>Dashboard</h1>
+				<div className="top-menu">
+					<h1>Monitoramento em Tempo real: </h1>
 					<select value={asc} onChange={handleChange}>
 						<option value="">Selecione uma Asc</option>
 						<option value="AJU3198122">AJU3198122</option>
@@ -171,6 +171,8 @@ const AdminHome = () => {
 export default AdminHome;
 
 const Container = styled.div`
+	box-sizing: border-box;
+
 	background-color: #000;
 	color: #fff;
 	padding-top: 90px;
@@ -203,9 +205,10 @@ const Container = styled.div`
 		height: 50px;
 	}
 	div.miniCard {
+		box-sizing: border-box;
 		border-radius: 10px;
 		border: 2px solid rgba(255, 255, 255, 0.5);
-		width: 40%;
+		width: 100%;
 		/* background-color: #c4c4c4; */
 		/* From https://css.glass */
 		background: rgba(255, 255, 0, 0);
@@ -225,7 +228,24 @@ const Container = styled.div`
 		gap: 4px;
 		display: flex;
 	}
+	.top-menu {
+		font-size: 16px;
+		display: flex;
+		select {
+			margin-left: 10px;
+			font-size: 16px;
+			background-color: #414141;
+			font-weight: 600;
+			color: #fff;
+			border: none;
+			border-radius: 10px;
+		}
+		margin: 0px 10px;
+	}
 	section.actually {
 		display: flex;
+		@media screen and (max-width: 600px) {
+			flex-direction: column;
+		}
 	}
 `;

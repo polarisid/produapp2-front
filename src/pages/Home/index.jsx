@@ -1,12 +1,14 @@
 import api from "../../services/api";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 import CardBox from "../../components/workspace/CardBox";
 import CardRectangle from "../../components/workspace/CardRectangle";
+import Button from "../../components/form/Button";
+import ModalComponent from "../../components/Modal/index";
 import TopBar from "../../components/TopBar";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+import { Container } from "./styles";
 
 const HomePage = () => {
 	const [newItem, setNewItem] = useState({ os: "", model: "" });
@@ -16,6 +18,9 @@ const HomePage = () => {
 	const [workspaces, setWorkspaces] = useState(false);
 	const [pendings, setPendings] = useState(false);
 	const [opens, setOpens] = useState(false);
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 	useEffect(() => {
 		if (!token) {
 			navigate("/");
@@ -38,14 +43,6 @@ const HomePage = () => {
 							item.status === "TechnicalAdvice"
 					)
 				);
-				// setPendings(
-				// 	items.data.filter(
-				// 		(item) =>
-				// 			item.status !== "Avaliation" &&
-				// 			item.status !== "InRepair" &&
-				// 			item.status !== "OQCFail"
-				// 	)
-				// );
 			}
 
 			getData();
@@ -63,6 +60,7 @@ const HomePage = () => {
 			setSearch({ os: "" });
 		} catch {
 			console.log("erro");
+			handleOpen();
 		}
 	}
 	async function handleSubmit(e) {
@@ -74,7 +72,7 @@ const HomePage = () => {
 			setWorkspaces(!workspaces);
 		} catch (err) {
 			console.log(err);
-			alert(err.response.data.error);
+			handleOpen();
 		}
 	}
 
@@ -87,12 +85,20 @@ const HomePage = () => {
 				</Container>
 			) : (
 				<>
+					<ModalComponent
+						title="Ocorreu um erro"
+						open={open}
+						handleClose={handleClose}
+						description="Verifique se a OS esta duplicada no sistema. Se não estiver,
+						entre em contato com o suporte!"
+					/>
+
 					<Container>
 						<section className="formSection">
 							<p>Avaliações e reparos</p>
 							<form onSubmit={handleSubmit}>
 								<input
-									placeholder="Os"
+									placeholder="Ordem de Serviço"
 									type="number"
 									required
 									value={newItem.os}
@@ -110,7 +116,7 @@ const HomePage = () => {
 										setNewItem({ ...newItem, [e.target.name]: e.target.value })
 									}
 								/>
-								<button type="submit">Adicionar</button>
+								<Button type="submit">Adicionar</Button>
 							</form>
 						</section>
 
@@ -136,10 +142,10 @@ const HomePage = () => {
 							)}
 						</section>
 						<section className="formSection">
-							<p>Pendentes</p>
+							<p>Pesquisa por OS</p>
 							<form onSubmit={handleSearchOs}>
 								<input
-									placeholder="Os"
+									placeholder="Ordem de Serviço"
 									type="number"
 									required
 									value={search.os}
@@ -149,7 +155,7 @@ const HomePage = () => {
 									}
 								/>
 
-								<button type="submit">Pesquisar</button>
+								<Button type="submit">Pesquisar</Button>
 							</form>
 						</section>
 
@@ -181,58 +187,4 @@ const HomePage = () => {
 	);
 };
 
-const Container = styled.div`
-	background-color: #000;
-	color: #fff;
-	padding-top: 90px;
-	height: 100vh;
-	.loading {
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: auto auto;
-	}
-	p {
-		font-weight: 600;
-	}
-	form {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	input {
-		height: 30px;
-		border-radius: 10px;
-		width: 150px;
-	}
-	button {
-		background-color: #b8b8b8;
-		border-radius: 10px;
-		width: 100px;
-		height: 28px;
-		border: none;
-		color: #000;
-		font-size: 14px;
-		font-weight: bold;
-		cursor: pointer;
-	}
-
-	section.avaliations {
-		display: flex;
-		gap: 10px;
-	}
-	div.divider {
-		width: 100%;
-		height: 1px;
-		background-color: #585858;
-		margin: 10px 0;
-	}
-	section.formSection {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-`;
 export default HomePage;

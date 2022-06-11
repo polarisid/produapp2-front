@@ -34,13 +34,19 @@ export default function MiniCard(props) {
 }
 
 const MINICARD = styled.div`
+	box-sizing: border-box;
+	padding: 5px;
+	margin: 5px;
 	div.flex {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 5px;
 	}
-	width: 100%;
+	background-color: #ffffff;
+	color: #000;
+	font-weight: bold;
+	width: 98%;
 	border-radius: 10px;
-	border: 2px solid rgba(155, 0, 0, 0.5);
+	border: 2px solid rgba(105, 105, 105, 0.5);
 `;

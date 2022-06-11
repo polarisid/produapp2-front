@@ -36,33 +36,35 @@ export default function CardBox(props) {
 				<b>Modelo:</b>
 				{props.model}
 			</h1>
-			<h1>
-				<b>Status:</b>
-			</h1>
-			<div className="select-dropdown">
-				{isLoading ? (
-					<h1>Carregando</h1>
-				) : (
-					<select
-						name="hall"
-						id={props.id}
-						value={props.status}
-						onChange={handleChangeStatus}
-					>
-						<option value="Pending">Pendencia</option>
-						<option value="TechnicalAdvice">Parecer técnico</option>
-						<option value="ConfirmedCost">Confirmado-Orçamento</option>
-						<option value="ConfirmedParts">Confirmado-Peças</option>
-						<option value="ConfirmedSaw">Confirmado-SAW</option>
-						<option value="Finished">Finalizado</option>
-						<option disabled value="Avaliation">
-							Avaliação/Reparo
-						</option>
-						<option disabled value="OQCFail">
-							OQC FAIL
-						</option>
-					</select>
-				)}
+			<div className="flex">
+				<h2>
+					<b>Status:</b>
+				</h2>
+				<div className="select-dropdown">
+					{isLoading ? (
+						<h1>Carregando</h1>
+					) : (
+						<select
+							name="hall"
+							id={props.id}
+							value={props.status}
+							onChange={handleChangeStatus}
+						>
+							<option value="Pending">Pendencia</option>
+							<option value="TechnicalAdvice">Parecer técnico</option>
+							<option value="ConfirmedCost">Confirmado-Orçamento</option>
+							<option value="ConfirmedParts">Confirmado-Peças</option>
+							<option value="ConfirmedSaw">Confirmado-SAW</option>
+							<option value="Finished">Finalizado</option>
+							<option disabled value="Avaliation">
+								Avaliação/Reparo
+							</option>
+							<option disabled value="OQCFail">
+								OQC FAIL
+							</option>
+						</select>
+					)}
+				</div>
 			</div>
 			<h1>
 				<b>Entrada</b> {dayjs(props.createTime).format("HH:mm")} -{" "}
@@ -85,47 +87,36 @@ export default function CardBox(props) {
 }
 
 const StyledDiv = styled.div`
-	color: #000;
-	.select-dropdown,
-	.select-dropdown * {
-		margin: 0;
-		padding: 0;
-		position: relative;
-		box-sizing: border-box;
+	div.flex {
+		display: flex;
+		align-items: center;
+		margin-top: 10px;
+		h2 {
+			font-size: 18px;
+		}
 	}
+	color: #000;
+
 	.select-dropdown {
-		position: relative;
 		background-color: #f5ffd1;
 		border-radius: 4px;
 	}
 	.select-dropdown select {
 		font-size: 1rem;
 		font-weight: normal;
-		/* max-width: 100%; */
-		padding: 4px 10px 4px 10px;
+		min-width: 100%;
 		border: none;
 		background-color: transparent;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
+		/* -webkit-appearance: none; */
+		/* -moz-appearance: none; */
+		/* appearance: none; */
+		transition: all 1s ease;
 	}
-	.select-dropdown select:active,
-	.select-dropdown select:focus {
-		outline: none;
-		box-shadow: none;
-	}
-	.select-dropdown:after {
-		content: "";
-		position: absolute;
-		top: 50%;
-		right: 8px;
-		width: 0;
-		height: 0;
-		margin-top: -2px;
-		border-top: 5px solid #aaa;
-		border-right: 5px solid transparent;
-		border-left: 5px solid transparent;
-	}
+	/* .select-dropdown select:hover {
+		background: #2b2b2b;
+		color: #ffffff;
+		/* font-weight: 900; */
+	//} *///
 
 	h1 {
 		font-size: 18px;
