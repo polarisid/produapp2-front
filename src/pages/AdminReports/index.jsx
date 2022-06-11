@@ -28,23 +28,11 @@ const AdminReports = () => {
 						item.status === "ConfirmedSaw" ||
 						item.status === "ConfirmedParts" ||
 						item.status === "ConfirmedCost" ||
+						item.status === "TechnicalAdvice" ||
 						item.status === "OQCFail"
 				)
 			);
-			console.log(
-				historic.sort((a, b) => {
-					let fa = a.user.name.toLowerCase(),
-						fb = b.user.name.toLowerCase();
 
-					if (fa < fb) {
-						return -1;
-					}
-					if (fa > fb) {
-						return 1;
-					}
-					return 0;
-				})
-			);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
@@ -84,8 +72,9 @@ const AdminReports = () => {
 									<th>Modelo</th>
 									<th>Técnico</th>
 									<th>Status</th>
-									<th>StatusFinal</th>
 									<th>Horário</th>
+									<th>StatusFinal</th>
+									<th>HorárioFinal</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -95,8 +84,9 @@ const AdminReports = () => {
 										<td>{item.item.model}</td>
 										<td>{item.user.name}</td>
 										<td>{item.status}</td>
-										<td>{item.item.status}</td>
 										<td>{dayjs(item.createdAt).format("HH:mm:ss")}</td>
+										<td>{item.item.status}</td>
+										<td>{dayjs(item.item.updateTime).format("HH:mm:ss")}</td>
 									</tr>
 								))}
 							</tbody>
