@@ -37,10 +37,7 @@ const AdminHome = () => {
 
 			setAvaliations(
 				result.data.filter(
-					(item) =>
-						item.status === "Avaliation" ||
-						item.status === "InRepair" ||
-						item.status === "OQCFail"
+					(item) => item.status === "Avaliation" || item.status === "OQCFail"
 				)
 			);
 			setParecer(
@@ -94,7 +91,6 @@ const AdminHome = () => {
 								<h1>Zerado</h1>
 							</div>
 						)}
-						{/* <MiniCard os="4163823678" model="Sm-A505GXZSWERSC" /> */}
 					</div>
 					<div className="miniCard">
 						<div className="title">
@@ -110,6 +106,7 @@ const AdminHome = () => {
 									tecName={item.userChanged.name}
 									elapsedTime={item.elapsedTime}
 									updateTime={item.updateTime}
+									createTime={item.createTime}
 								/>
 							))
 						) : (
@@ -132,6 +129,7 @@ const AdminHome = () => {
 									tecName={item.userChanged.name}
 									elapsedTime={item.elapsedTime}
 									updateTime={item.updateTime}
+									createTime={item.createTime}
 								/>
 							))
 						) : (
@@ -154,6 +152,7 @@ const AdminHome = () => {
 									tecName={item.userChanged.name}
 									elapsedTime={item.elapsedTime}
 									updateTime={item.updateTime}
+									createTime={item.createTime}
 								/>
 							))
 						) : (
@@ -209,8 +208,6 @@ const Container = styled.div`
 		border-radius: 10px;
 		border: 2px solid rgba(255, 255, 255, 0.5);
 		width: 100%;
-		/* background-color: #c4c4c4; */
-		/* From https://css.glass */
 		background: rgba(255, 255, 0, 0);
 		border-radius: 16px;
 		box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -218,11 +215,6 @@ const Container = styled.div`
 		-webkit-backdrop-filter: blur(4.4px);
 		border: 1px solid rgba(255, 255, 255, 1);
 	}
-
-	/* div.miniCard-content {
-		background-color: rgba(31, 31, 31, 0.5);
-		margin-top: 8px;
-	} */
 
 	div.flex {
 		gap: 4px;

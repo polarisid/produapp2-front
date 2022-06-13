@@ -9,6 +9,9 @@ import useAuth from "../../hooks/useAuth";
 import jwt_decode from "jwt-decode";
 
 const OqcPage = () => {
+	setInterval(() => {
+		setWorkspaces(!workspaces);
+	}, 60000);
 	const [newItem, setNewItem] = useState({ os: "", model: "" });
 	const [search, setSearch] = useState({ os: "" });
 	const navigate = useNavigate();
@@ -34,30 +37,6 @@ const OqcPage = () => {
 			console.log("erro");
 		}
 	}, [workspaces]);
-
-	async function handleSearchOs(e) {
-		e.preventDefault();
-		try {
-			const itemsPending = await api.searchItemByOs(token, search.os);
-			setPendings(itemsPending.data);
-			console.log(itemsPending.data);
-			setSearch({ os: "" });
-		} catch {
-			console.log("erro");
-		}
-	}
-	async function handleSubmit(e) {
-		e.preventDefault();
-		console.log(newItem);
-		try {
-			const res = await api.createItem(newItem, token);
-			setNewItem({ os: "", model: "" });
-			setWorkspaces(!workspaces);
-		} catch (err) {
-			console.log(err);
-			alert(err.response.data.error);
-		}
-	}
 
 	return (
 		<>

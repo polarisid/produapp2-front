@@ -20,7 +20,6 @@ const AdminReports = () => {
 			setAsc(e.target.value);
 			const result = await api.getHistoric(e.target.value, token);
 
-			console.log(result.data);
 			setHistoric(
 				result.data.filter(
 					(item) =>
@@ -28,7 +27,6 @@ const AdminReports = () => {
 						item.status === "ConfirmedSaw" ||
 						item.status === "ConfirmedParts" ||
 						item.status === "ConfirmedCost" ||
-						item.status === "TechnicalAdvice" ||
 						item.status === "OQCFail"
 				)
 			);

@@ -6,10 +6,6 @@ export default function CardBoxOqc(props) {
 	const { token } = useAuth();
 	const { workspaces, setWorkspaces } = props;
 
-	setInterval(() => {
-		setWorkspaces(!workspaces);
-	}, 60000);
-
 	async function handleChangeStatus(e) {
 		try {
 			await api.changeStatus(token, e.target.id, {
