@@ -1,7 +1,6 @@
 import api from "../../services/api";
 import { useState, useEffect } from "react";
 import Input from "../../components/form/Input";
-import Button from "../../components/form/Button";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import styled from "styled-components";
@@ -153,6 +152,8 @@ const Container = styled.div`
 	form {
 		display: flex;
 		flex-direction: column;
+		transform: translateY(1000px);
+		animation: 0.5s ${slideIn} ease-in-out forwards 1s;
 	}
 	.custom-btn {
 		font-size: 16px;
@@ -233,6 +234,15 @@ const Container = styled.div`
 		position: absolute;
 		bottom: -10px;
 		animation: 1s ${underline} ease-in-out forwards 2s;
+		mix-blend-mode: screen;
+	}
+	form::before {
+		content: "";
+		width: 0%;
+		height: 76px;
+		position: absolute;
+		bottom: -10px;
+		animation: 0.8s ${underline} ease-in-out forwards 1s;
 		mix-blend-mode: screen;
 	}
 `;

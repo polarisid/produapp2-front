@@ -172,7 +172,7 @@ export default AdminHome;
 
 const Container = styled.div`
 	box-sizing: border-box;
-
+	overflow-x: hidden;
 	background-color: #000;
 	color: #fff;
 	padding-top: 90px;

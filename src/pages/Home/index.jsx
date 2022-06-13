@@ -21,6 +21,11 @@ const HomePage = () => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+
+	setInterval(() => {
+		setWorkspaces(!workspaces);
+	}, 60000);
+
 	useEffect(() => {
 		if (!token) {
 			navigate("/");
@@ -31,11 +36,11 @@ const HomePage = () => {
 		try {
 			async function getData() {
 				const items = await api.getWorkpace(token);
+				console.log(items.data);
 				setOpens(
 					items.data.filter(
 						(item) =>
 							item.status === "Avaliation" ||
-							item.status === "InRepair" ||
 							item.status === "OQCFail" ||
 							item.status === "ConfirmedSaw" ||
 							item.status === "ConfirmedCost" ||

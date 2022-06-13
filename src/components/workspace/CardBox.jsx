@@ -2,16 +2,12 @@ import styled from "styled-components";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function CardBox(props) {
 	const { token } = useAuth();
 	const { workspaces, setWorkspaces } = props;
 	const [isLoading, setIsLoading] = useState(false);
-
-	setInterval(() => {
-		setWorkspaces(!workspaces);
-	}, 2000);
 
 	async function handleChangeStatus(e) {
 		setIsLoading(true);

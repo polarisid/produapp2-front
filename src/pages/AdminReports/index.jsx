@@ -56,8 +56,29 @@ const AdminReports = () => {
 				<Container>Carregando</Container>
 			) : (
 				<Container>
-					<div>
-						<h1>Dashboard</h1>
+					<div className="top-menu">
+						<h1>Volume geral de Produção - </h1>
+						<select value={asc} onChange={handleChange}>
+							<option value="">Selecione uma Asc</option>
+							<option value="AJU3198122">AJU3198122</option>
+							<option value="SLZ5286953">SLZ5286953</option>
+						</select>
+					</div>
+					<div className="table-wrapper">
+						<table className="fl-table">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Avaliações</th>
+									<th>Trocas</th>
+									<th>Finalizados</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+
+					<div className="top-menu">
+						<h1>Planilha do Dia - Histórico e produtividade: </h1>
 						<select value={asc} onChange={handleChange}>
 							<option value="">Selecione uma Asc</option>
 							<option value="AJU3198122">AJU3198122</option>
@@ -105,6 +126,21 @@ const Container = styled.div`
 	padding-top: 90px;
 	height: 100vh;
 	overflow-x: hidden;
+	.top-menu {
+		color: #ffffff;
+		font-size: 16px;
+		display: flex;
+		select {
+			margin-left: 10px;
+			font-size: 16px;
+			background-color: #414141;
+			font-weight: 600;
+			color: #fff;
+			border: none;
+			border-radius: 10px;
+		}
+		margin: 0px 10px;
+	}
 
 	* {
 		box-sizing: border-box;
@@ -157,12 +193,12 @@ const Container = styled.div`
 
 	.fl-table thead th {
 		color: #ffffff;
-		background: #324960;
+		background: #4b4b4b;
 	}
 
 	.fl-table thead th:nth-child(odd) {
 		color: #ffffff;
-		background: #324960;
+		background: #363636;
 	}
 
 	.fl-table tr:nth-child(even) {

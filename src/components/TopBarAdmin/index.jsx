@@ -19,6 +19,7 @@ export default function TopBarAdmin() {
 			<div className="rightContent">
 				<h1 onClick={() => navigate("/admin/home")}>Home</h1>
 				<h1 onClick={() => navigate("/admin/reports")}>Relatórios</h1>
+				<h1 onClick={() => alert("Em breve")}>Gerenciamento</h1>
 				<h1 onClick={handleLogout}>Sair</h1>
 			</div>
 		</StyledDiv>

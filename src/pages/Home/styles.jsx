@@ -4,6 +4,7 @@ export const Container = styled.div`
 	color: #fff;
 	padding-top: 90px;
 	height: 100vh;
+
 	.loading {
 		height: 100%;
 		display: flex;
@@ -32,6 +33,20 @@ export const Container = styled.div`
 	section.avaliations {
 		display: flex;
 		gap: 10px;
+		overflow-x: auto;
+	}
+	section.avaliations::-webkit-scrollbar {
+		width: 06px; /* width of the entire scrollbar */
+		height: 08px; /* height of the entire scrollbar */
+	}
+
+	section.avaliations::-webkit-scrollbar-track {
+		background: #242424; /* color of the tracking area */
+	}
+
+	section.avaliations::-webkit-scrollbar-thumb {
+		background-color: #585858; /* color of the scroll thumb */
+		border-radius: 20px; /* roundness of the scroll thumb */
 	}
 	div.divider {
 		width: 100%;
