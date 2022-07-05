@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const baseAPI = axios.create({
-	baseURL: "http://localhost:5000",
-	// baseURL: "https://hidden-mesa-58705.herokuapp.com",
+	// baseURL: "http://localhost:5000",
+	baseURL: "https://hidden-mesa-58705.herokuapp.com",
 });
 
 function getConfig(token) {
