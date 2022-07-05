@@ -6,6 +6,7 @@ import AdminHome from "./pages/AdminHome";
 import AdminReports from "./pages/AdminReports";
 import OqcPage from "./pages/OQCPage";
 import AdminManagement from "./pages/AdminManagement";
+import SupervisorPage from "./pages/SupervisorHome";
 const PagesRoutes = () => {
 	return (
 		<Router>
@@ -17,6 +18,7 @@ const PagesRoutes = () => {
 				<Route path="/admin/reports" element={<AdminReports />} />
 				<Route path="/oqc/home" element={<OqcPage />} />
 				<Route path="/admin/management" element={<AdminManagement />} />
+				<Route path="/admin/supervisor/:asc" element={<SupervisorPage />} />
 			</Routes>
 		</Router>
 	);
