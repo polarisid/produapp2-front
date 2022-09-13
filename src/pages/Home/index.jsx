@@ -22,9 +22,9 @@ const HomePage = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	setInterval(() => {
-		setWorkspaces(!workspaces);
-	}, 60000);
+	// setInterval(() => {
+	// 	setWorkspaces(!workspaces);
+	// }, 60000);
 
 	useEffect(() => {
 		if (!token) {

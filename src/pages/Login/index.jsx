@@ -151,6 +151,8 @@ const Container = styled.div`
 	background-color: #242424;
 	form {
 		display: flex;
+		max-width: 400px;
+		width: 50%;
 		flex-direction: column;
 		transform: translateY(1000px);
 		animation: 0.5s ${slideIn} ease-in-out forwards 1s;

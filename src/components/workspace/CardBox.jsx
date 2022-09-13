@@ -8,6 +8,7 @@ export default function CardBox(props) {
 	const { token } = useAuth();
 	const { workspaces, setWorkspaces } = props;
 	const [isLoading, setIsLoading] = useState(false);
+	const [refresh, setRefresh] = useState(false);
 
 	async function handleChangeStatus(e) {
 		setIsLoading(true);
@@ -21,6 +22,12 @@ export default function CardBox(props) {
 			console.log(err.toJSON());
 		}
 	}
+
+
+	setInterval(() => {
+		setRefresh(!refresh);
+	}, 1000);
+
 
 	return (
 		<StyledDiv>
